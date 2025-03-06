@@ -1,24 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody2D rb;
-
+    private Rigidbody2D rb;
     [SerializeField] private float speed = 5f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0; // Ensure no gravity
     }
 
-    // Update is called once per frame
     void Update()
     {
+        float move = 0f;
+
         if (Input.GetKey(KeyCode.UpArrow))
-            rb.AddForce(Vector3.up * speed);
+            move = 1f;
         if (Input.GetKey(KeyCode.DownArrow))
-            rb.AddForce(Vector3.down * speed);
+            move = -1f;
+
+        rb.velocity = new Vector2(0, move * speed); // Directly set velocity
     }
 }
